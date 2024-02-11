@@ -1,0 +1,11 @@
+function [P]=influence_matrix_vortex(x1,x2,y1,y2,l,x_cp,y_cp)
+dx=x2-x1;
+dy=y2-y1;
+geta=(1/l)*[dx,dy;-dy,dx]*[x_cp-x1;y_cp-y1];
+g=geta(1,1);
+n=geta(2,1);
+A=atan2(n*l,g^2+n^2-l*g);
+B=0.5*log((n^2+g^2)/((g-l)^2+n^2));
+T=(1/l)*[dx,-dy;dy,dx];
+p=[(l-g)*A+n*B,g*A-n*B;n*A-(l-g)*B-l,-n*A-g*B+l];
+P=(1/(2*pi*l))*T*p;
